@@ -3,7 +3,7 @@ class Rules {
 		this.message = botInstance.message
 		let self = this
 		let rules = require(rulesFile)
-		this.embed = new botInstance.discord.RichEmbed()
+		this.embed = new botInstance.discord.MessageEmbed()
 		Object.keys(rules).forEach(function(key){
 			let body = ""
 			let ruleSection = rules[key]
