@@ -1,0 +1,30 @@
+{
+  "name": "pixelony",
+  "version": "1.0.0",
+  "description": "Create and manage multiple discord bots from one project with less coding.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "M4ST3RX",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "github:discordjs/discord.js#master",
+    "knex": "^0.16.5",
+    "mysql": "^2.17.1",
+    "path": "^0.12.7",
+    "sqlite3": "^4.0.7"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M4ST3RX/pixelony.git"
+  },
+  "bugs": {
+    "url": "https://github.com/M4ST3RX/pixelony/issues"
+  },
+  "homepage": "https://github.com/M4ST3RX/pixelony#readme"
+}
