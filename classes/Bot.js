@@ -5,7 +5,6 @@ const Rules = require('./Rules')
 const Music = require('./Music')
 const Admin = require('./Admin')
 const ClassHelper = require('./ClassHelper.js')
-const DiscordGame = require('discord-game')
 
 class Bot {
 	constructor(token){
@@ -16,7 +15,7 @@ class Bot {
 		this.discord = Discord
 		this.client = client
 		this.command = new Command()
-		this.game = DiscordGame.create('Client ID', true)
+		this.rpc = require('discord-rich-presence')('180984871685062656')
 		
 		client.on('message', message => {
 			if(!message.guild) return
@@ -39,10 +38,6 @@ class Bot {
 		})
 
 		client.login(token)
-		
-		setInterval(function() {
-			DiscordGame.runCallback()
-		}, 1000/60)
 		
 		ClassHelper.addBotClass(Bot)
 	}

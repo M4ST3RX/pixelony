@@ -27,9 +27,9 @@ class Music {
 
 function connect(args, bot, message){
 	let self = bot.music
-	if (message.member.voiceChannel) {
-		message.member.voiceChannel.join().then(conn => {
-			message.channel.send('Connected to channel `'+ message.member.voiceChannel.name +'`!')
+	if (message.member.voice.channel) {
+		message.member.voice.channel.join().then(conn => {
+			message.channel.send('Connected to channel `'+ message.member.voice.channel.name +'`!')
 			self.isConnected = true
 			self.connection = conn
 		}).catch(console.log)
@@ -42,7 +42,7 @@ function disconnect(args, bot, message){
 	let self = bot.music
 	let client = bot.client
 	if(self.isConnected){
-		client.channels.get(message.member.voiceChannelID).leave()
+		client.channels.get(message.member.voice.channelId).leave()
 		self.isConnected = false
 		self.dispatcher = undefined
 		message.channel.send('Disconnected!')
@@ -95,42 +95,25 @@ function play(args, bot, message){
 		let url = args[0]
 		if(url instanceof Array){
 			const stream = ytdl("https://www.youtube.com"+url[0].url, { filter : 'audioonly' })
-			self.dispatcher = self.connection.playStream(stream, self.options)
+			self.dispatcher = self.connection.play(stream, self.options)
 			message.channel.send("Now playing: " + `\`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
 				const stream = ytdl(url, { filter : 'audioonly' })
-				self.dispatcher = self.connection.playStream(stream, self.options)
+				self.dispatcher = self.connection.play(stream, self.options)
 			}
 		}
-		console.log(url[0])
+		
 		self.dispatcher.on("start", () => {
-			const activity = {
-				details: 'Details',
-				state: 'State',
-				assets: {
-					largeImage: 'large',
-					largeText: 'Large',
-					samllImage: 'small',
-					smallText: 'Small'
-				},
-					timestamps: {
-					startAt: new Date(),
-					endAt: new Date()
-				},
-					secrets: {
-					match: 'match',
-					join: 'join',
-					spectate: 'spectate'
-				},
-				party: {
-					id: 'id',
-					currentSize: 1,
-					maxSize: 5
-				}
-			}
-			
-			self.game.Activity.update(activity).then()
+			bot.rpc.updatePresence({
+				state: 'slithering',
+				details: '🐍',
+				startTimestamp: Date.now(),
+				endTimestamp: Date.now() + 300,
+				largeImageKey: 'snek_large',
+				smallImageKey: 'snek_small',
+				instance: true,
+			});
 			//self.client.user.setActivity(url[0].title, { type: "STREAMING" })
 		})
 	} else {

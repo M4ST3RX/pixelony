@@ -13,3 +13,5 @@ class Message {
 		channel.send(msg)
 	}
 }
+
+module.exports = Message
