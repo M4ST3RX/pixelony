@@ -94,12 +94,12 @@ function play(args, bot, message){
 	if(self.isConnected){
 		let url = args[0]
 		if(url instanceof Array){
-			const stream = ytdl("https://www.youtube.com"+url[0].url, { filter : 'audioonly' })
+			const stream = ytdl("https://www.youtube.com"+url[0].url, { filter : 'audioonly', highWaterMark: 1<<25 })
 			self.dispatcher = self.connection.play(stream, self.options)
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
-				const stream = ytdl(url, { filter : 'audioonly' })
+				const stream = ytdl(url, { filter : 'audioonly', highWaterMark: 1<<25 })
 				self.dispatcher = self.connection.play(stream, self.options)
 			}
 		}
