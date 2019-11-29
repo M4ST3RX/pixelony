@@ -93,13 +93,12 @@ function play(args, bot, message){
 	if(self.isConnected){
 		let url = args[0]
 		if(url instanceof Array){
-			const stream = ytdl("https://www.youtube.com"+url[0].url, { type : 'opus' })
-			self.dispatcher = self.connection.play(stream, self.options)
+			const stream = ytdl("https://www.youtube.com"+url[0].url)
+			self.dispatcher = self.connection.play(stream, { type : 'opus' })
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
-				const stream = ytdl(url, { type : 'opus' })
-				self.dispatcher = self.connection.play(stream, self.options)
+				self.dispatcher = self.connection.play(ytdl(url), { type : 'opus' })
 			}
 		}
 		
