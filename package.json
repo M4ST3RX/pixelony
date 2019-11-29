@@ -16,7 +16,7 @@
     "path": "^0.12.7",
     "sqlite3": "^4.1.0",
     "yt-search": "^0.4.1",
-    "ytdl-core-discord": "^1.0.3"
+    "ytdl-core": "^1.0.3"
   },
   "directories": {
     "doc": "docs"

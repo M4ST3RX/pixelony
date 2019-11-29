@@ -1,4 +1,4 @@
-const ytdl = require("ytdl-core-discord")
+const ytdl = require("ytdl-core")
 const ytSearch = require("yt-search")
 
 class Music {
