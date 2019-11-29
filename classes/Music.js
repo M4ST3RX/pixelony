@@ -105,10 +105,6 @@ function play(args, bot, message){
 				})
 			}
 		}
-		
-		self.dispatcher.on("start", () => {
-			//TODO: Send message about the video.
-		})
 	} else {
 		message.channel.send('I am not connected to any voice channel!')
 	}
