@@ -93,16 +93,14 @@ function play(args, bot, message){
 	if(self.isConnected){
 		let url = args[0]
 		if(url instanceof Array){
-			const stream = ytdl("https://www.youtube.com"+url[0].url)
+			const stream = ytdl("https://www.youtube.com"+url[0].url, {quality: 'highestaudio', seek: 0, volume: 0.3})
 			self.dispatcher = self.connection.play(stream)
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
-				self.dispatcher = self.connection.play(ytdl(url))
+				self.dispatcher = self.connection.play(ytdl(url, {quality: 'highestaudio', seek: 0, volume: 0.3}))
 			}
 		}
-		
-		dispatcher.on('error', console.error);
 		
 		self.dispatcher.on("start", () => {
 			//TODO: Send message about the video.
