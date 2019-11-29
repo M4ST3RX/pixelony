@@ -94,13 +94,15 @@ function play(args, bot, message){
 		let url = args[0]
 		if(url instanceof Array){
 			const stream = ytdl("https://www.youtube.com"+url[0].url)
-			self.dispatcher = self.connection.play(stream, { type : 'opus' })
+			self.dispatcher = self.connection.play(stream)
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
-				self.dispatcher = self.connection.play(ytdl(url), { type : 'opus' })
+				self.dispatcher = self.connection.play(ytdl(url))
 			}
 		}
+		
+		dispatcher.on('error', console.error);
 		
 		self.dispatcher.on("start", () => {
 			//TODO: Send message about the video.
