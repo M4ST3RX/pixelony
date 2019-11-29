@@ -1,5 +1,4 @@
-const Message = require('./Message')
-const ytdl = require("ytdl-core")
+const ytdl = require("ytdl-core-discord")
 const ytSearch = require("yt-search")
 
 class Music {
@@ -52,15 +51,15 @@ function disconnect(args, bot, message){
 }
 
 function search(args, bot, message){
-	if(args.length == 0) return
+	if(args.length === 0) return
 	let self = bot.music
 	if(self.isConnected) {
 		ytSearch(args.join(' '), (err, res) => {
 			if(err) return message.channel.send("Something went wrong")
 			
-			var videos = res.videos.slice(0, 10)
-			var resp = ""
-			for(var i in videos){
+			let videos = res.videos.slice(0, 10)
+			let resp = ""
+			for(let i in videos){
 				if(typeof(videos[i]) !== "function") {
 					resp += `[**${parseInt(i)+1}**] \`${videos[i].title}\` (${videos[i].timestamp})\n`
 				}
@@ -68,12 +67,12 @@ function search(args, bot, message){
 			resp += `\nChoose a number between \`1-${videos.length}\` or enter \`0\` to exit`
 			message.channel.send(resp)
 			
-			const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content > 0 || m.content == 0
+			const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content > 0 || m.content === 0
 			const collector = message.channel.createMessageCollector(filter)
 			collector.videos = videos
 			collector.once('collect', function(m){
 				if(!isNaN(m.content) && m.content >= 0 && m.content < 11){
-					if(parseInt(m.content) == 0) {
+					if(parseInt(m.content) === 0) {
 						message.channel.send("Search cancelled.")
 						collector.stop()
 					} else {
@@ -94,12 +93,12 @@ function play(args, bot, message){
 	if(self.isConnected){
 		let url = args[0]
 		if(url instanceof Array){
-			const stream = ytdl("https://www.youtube.com"+url[0].url, { filter : 'audioonly', highWaterMark: 1<<50 })
+			const stream = ytdl("https://www.youtube.com"+url[0].url, { type : 'opus' })
 			self.dispatcher = self.connection.play(stream, self.options)
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
-				const stream = ytdl(url, { filter : 'audioonly', highWaterMark: 1<<50 })
+				const stream = ytdl(url, { type : 'opus' })
 				self.dispatcher = self.connection.play(stream, self.options)
 			}
 		}
@@ -113,7 +112,7 @@ function play(args, bot, message){
 }
 
 function stop(args, bot, message){
-	if(args.length != 0) return
+	if(args.length !== 0) return
 	let self = bot.music
 	if(self.dispatcher) {
 		self.dispatcher.end()
@@ -123,7 +122,7 @@ function stop(args, bot, message){
 }
 
 function pause(args, bot, message){
-	if(args.length != 0) return
+	if(args.length !== 0) return
 	let self = bot.music
 	if(self.dispatcher && !self.dispatcher.paused) {
 		self.dispatcher.pause()
@@ -132,7 +131,7 @@ function pause(args, bot, message){
 }
 
 function resume(args, bot, message){
-	if(args.length != 0) return
+	if(args.length !== 0) return
 	let self = bot.music
 	if(self.dispatcher && self.dispatcher.paused) {
 		self.dispatcher.resume()
