@@ -96,7 +96,7 @@ function play(args, bot, message){
 		if(url instanceof Array){
 			const stream = ytdl("https://www.youtube.com"+url[0].url, { filter : 'audioonly' })
 			self.dispatcher = self.connection.play(stream, self.options)
-			message.channel.send("Now playing: " + `\`${url[0].title}\``)
+			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
 				const stream = ytdl(url, { filter : 'audioonly' })
@@ -105,16 +105,7 @@ function play(args, bot, message){
 		}
 		
 		self.dispatcher.on("start", () => {
-			bot.rpc.updatePresence({
-				state: 'slithering',
-				details: '🐍',
-				startTimestamp: Date.now(),
-				endTimestamp: Date.now() + 300,
-				largeImageKey: 'snek_large',
-				smallImageKey: 'snek_small',
-				instance: true,
-			});
-			//self.client.user.setActivity(url[0].title, { type: "STREAMING" })
+			//TODO: Send message about the video.
 		})
 	} else {
 		message.channel.send('I am not connected to any voice channel!')

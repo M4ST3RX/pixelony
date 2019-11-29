@@ -15,7 +15,6 @@ class Bot {
 		this.discord = Discord
 		this.client = client
 		this.command = new Command()
-		this.rpc = require('discord-rich-presence')('180984871685062656')
 		
 		client.on('message', message => {
 			if(!message.guild) return
