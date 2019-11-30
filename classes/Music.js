@@ -44,7 +44,7 @@ function disconnect(args, bot, message){
 	let self = bot.music
 	let client = bot.client
 	if(self.isConnected){
-		client.channels.get(message.member.voice.channelId).leave()
+		client.channels.get(message.member.voice.channel.id).leave()
 		self.isConnected = false
 		self.dispatcher = undefined
 		message.channel.send('Disconnected!')
@@ -91,19 +91,16 @@ function search(args, bot, message){
 
 function play(args, bot, message){
 	if(!args[0]) return
-	console.log("asdasdsad")
 	let self = bot.music
 	//self.dispatcher = undefined
 	if(self.isConnected){
 		let url = args[0]
 		if(url instanceof Array){
-			console.log("asdasdsad")
 			const stream = ytdl("https://www.youtube.com"+url[0].url, { filter : 'audioonly', highWaterMark: 1<<25 })
 			self.currentlyPlaying = "https://www.youtube.com"+url[0].url
 			self.dispatcher = self.connection.play(stream, self.options)
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
-			console.log("12312321312")
 			if(url.startsWith("https://youtube.com/watch?v=") || url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
 				console.log("456456456")
 				self.currentlyPlaying = url
@@ -126,6 +123,7 @@ function stop(args, bot, message){
 	if(args.length !== 0) return
 	let self = bot.music
 	if(self.dispatcher) {
+		self.isLooping = false
 		self.dispatcher.end()
 		message.channel.send('Music stopped!')
 	}
