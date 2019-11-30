@@ -97,7 +97,7 @@ function play(args, bot, message){
 		let url = args[0]
 		if(url instanceof Array){
 			const stream = ytdl("https://www.youtube.com"+url[0].url, { filter : 'audioonly', highWaterMark: 1<<25 })
-			self.currentlyPlaying = url[0].url
+			self.currentlyPlaying = "https://www.youtube.com"+url[0].url
 			self.dispatcher = self.connection.play(stream, self.options)
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
