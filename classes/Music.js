@@ -70,7 +70,7 @@ function search(args, bot, message){
 			resp += `\nChoose a number between \`1-${videos.length}\` or enter \`0\` to exit`
 			message.channel.send(resp)
 			
-			const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content > 0 || m.content === 0
+			const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content >= 0
 			const collector = message.channel.createMessageCollector(filter)
 			collector.videos = videos
 			collector.once('collect', function(m){
