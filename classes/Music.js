@@ -10,6 +10,8 @@ class Music {
 		this.dispatcher = undefined
 		this.options = options
 		this.volume = 0.2
+		this.isLooping = false
+		this.currentlyPlaying = ""
 	}
 	
 	start(prefix) {
@@ -94,14 +96,20 @@ function play(args, bot, message){
 		let url = args[0]
 		if(url instanceof Array){
 			const stream = ytdl("https://www.youtube.com"+url[0].url, { filter : 'audioonly', highWaterMark: 1<<25 })
+			self.currentlyPlaying = url
 			self.dispatcher = self.connection.play(stream, self.options)
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
+				self.currentlyPlaying = url
 				const stream = ytdl(url, { filter : 'audioonly', highWaterMark: 1<<25 })
 				self.dispatcher = self.connection.play(stream, self.options)
 			}
 		}
+		
+		self.dispatcher.on('end', function(reason){
+			play(url, bot, message)
+		})
 	} else {
 		message.channel.send('I am not connected to any voice channel!')
 	}
@@ -135,6 +143,19 @@ function resume(args, bot, message){
 	}
 }
 
+function loop(args, bot, message){
+	if(args.length !== 0) return
+	let self = bot.music
+	if(self.dispatcher && !self.dispatcher.paused) {
+		if(!self.isLooping) {
+			self.isLooping = true
+			message.channel.send("Loop is turned **ON**")
+		} else {
+			self.isLooping = false
+			message.channel.send("Loop is turned **OFF**")
+		}
+	}
+}
 
 function volume(args, bot, message){
 	let self = bot.music
