@@ -23,6 +23,7 @@ class Music {
 		this.client.command.add(prefix, 'pause', pause, this.channel)
 		this.client.command.add(prefix, 'stop', stop, this.channel)
 		this.client.command.add(prefix, 'resume', resume, this.channel)
+		this.client.command.add(prefix, 'loop', loop, this.channel)
 	}
 }
 
