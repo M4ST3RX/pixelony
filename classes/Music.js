@@ -91,6 +91,7 @@ function search(args, bot, message){
 
 function play(args, bot, message){
 	if(!args[0]) return
+	console.log("asdasdsad")
 	let self = bot.music
 	//self.dispatcher = undefined
 	if(self.isConnected){
@@ -113,7 +114,7 @@ function play(args, bot, message){
 		
 		self.dispatcher.on('end', function(reason){
 			if(self.isLooping) {
-				play([self.currentlyPlaying], bot, message)
+				self.play([self.currentlyPlaying], bot, message)
 			}
 		})
 	} else {
