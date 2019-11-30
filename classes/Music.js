@@ -102,7 +102,6 @@ function play(args, bot, message){
 			message.channel.send(`Now playing: \`${url[0].title}\``)
 		} else {
 			if(url.startsWith("https://youtube.com/watch?v=") || url.startsWith("https://www.youtube.com/watch?v=") || url.startsWith("https://youtu.be/")){
-				console.log("456456456")
 				self.currentlyPlaying = url
 				const stream = ytdl(url, { filter : 'audioonly', highWaterMark: 1<<25 })
 				self.dispatcher = self.connection.play(stream, self.options)
