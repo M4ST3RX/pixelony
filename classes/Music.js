@@ -74,8 +74,11 @@ function search(args, bot, message){
 			const collector = message.channel.createMessageCollector(filter)
 			collector.videos = videos
 			collector.once('collect', function(m){
+				console.log(m.content)
 				if(!isNaN(m.content) && m.content >= 0 && m.content < 11){
+					console.log(m.content)
 					if(parseInt(m.content) === 0) {
+					console.log(m.content)
 						message.channel.send("Search cancelled.")
 						collector.stop()
 					} else {
