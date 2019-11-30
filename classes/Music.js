@@ -114,7 +114,7 @@ function play(args, bot, message){
 		
 		self.dispatcher.on('end', function(reason){
 			if(self.isLooping) {
-				self.play([self.currentlyPlaying], bot, message)
+				play([self.currentlyPlaying], bot, message)
 			}
 		})
 	} else {
