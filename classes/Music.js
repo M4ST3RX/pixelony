@@ -62,8 +62,6 @@ function search(args, bot, message){
 		ytSearch(args.join(' '), (err, res) => {
 			if(err) return message.channel.send("Something went wrong")
 			
-			console.log(args)
-		
 			let videos = res.videos.slice(0, 10)
 			let resp = ""
 			for(let i in videos){
@@ -72,7 +70,6 @@ function search(args, bot, message){
 				}
 			}
 			resp += `\nChoose a number between \`1-${videos.length}\` or enter \`0\` to exit`
-			console.log(resp)
 			message.channel.send(resp)
 			
 			const filter = m => !isNaN(m.content) && m.content < videos.length + 1 && m.content >= 0
@@ -84,7 +81,7 @@ function search(args, bot, message){
 						message.channel.send("Search cancelled.")
 						collector.stop()
 					} else {
-						play([[videos[parseInt(m.content)-1]]], bot, message)
+						play(videos[parseInt(m.content)-1], bot, message)
 					}
 				}
 			})
