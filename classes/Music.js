@@ -44,7 +44,9 @@ function disconnect(args, bot, message){
 	let self = bot.music
 	let client = bot.client
 	if(self.isConnected){
-		client.channels.get(message.member.voice.channel.id).leave()
+		client.channels.fetch(message.member.voice.channel.id).then(channel => {
+			channel.leave()
+		})
 		self.isConnected = false
 		self.dispatcher = undefined
 		message.channel.send('Disconnected!')
