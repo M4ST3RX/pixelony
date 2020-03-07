@@ -81,7 +81,7 @@ function search(args, bot, message){
 						message.channel.send("Search cancelled.")
 						collector.stop()
 					} else {
-						play(videos[parseInt(m.content)-1], bot, message)
+						play([[videos[parseInt(m.content)-1]]], bot, message)
 					}
 				}
 			})
