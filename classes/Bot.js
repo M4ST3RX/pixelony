@@ -20,13 +20,14 @@ class Bot {
 			if(!message.guild) return
 			this.message = new Message(message)
 			let msg = message.content
-			let syntax = msg.substring(0, 1)
 			let args = msg.substring(1).split(' ')
 			let cmd = args[0]
-			args.splice(0, 1)
 			let commands = this.command.commands
+			//TODO: Refactor
 			for(let key = 0; key < commands.length; key++) {
 				let object = commands[key]
+				let syntax = msg.substring(0, object.prefix.length)
+				args.splice(0, 1)
 				if(object.prefix == syntax && (object.command.toLowerCase() == cmd.toLowerCase() || object.alias.includes(cmd.toLowerCase()))){
 					if(object.channel === undefined || object.channel == message.channel.name) {
 						object.function(args, self, message)
