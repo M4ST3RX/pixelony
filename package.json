@@ -1,6 +1,6 @@
 {
   "name": "pixelony",
-  "version": "1.2.0-dev",
+  "version": "1.2.1-dev",
   "description": "Create and manage multiple discord bots from one project with less coding.",
   "main": "index.js",
   "scripts": {
