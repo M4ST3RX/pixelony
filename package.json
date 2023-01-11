@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "github:discordjs/discord.js#master",
-    "knex": "^0.19.5",
+    "knex": "^2.4.0",
     "mysql": "^2.17.1",
     "node-opus": "^0.3.3",
     "path": "^0.12.7",
